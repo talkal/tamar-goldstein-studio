@@ -34,96 +34,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Gallery Loading Logic ---
     const galleryGrid = document.getElementById('gallery-grid');
+    let currentProjectIndex = 0;
+    let currentImageIndex = 0;
     
-    const projects = [
-        {
-            name: 'Sketches',
-            folder: 'Sketches',
-            images: [
-                'tamar_gold2__2025-12-31T160059.000Z.jpg',
-                'tamar_gold2__2026-04-11T165221.000Z_4.jpg',
-                'tamar_gold2__2026-04-26T170713.000Z_2.jpg',
-                'tamar_gold2__2026-04-26T170713.000Z_3.jpg'
-            ]
-        },
-        {
-            name: 'Big Fish Energy',
-            folder: 'Big Fish Energy',
-            images: [
-                'tamar_gold2__2026-04-11T165221.000Z_1.jpg',
-                'tamar_gold2__2026-04-11T165221.000Z_2.jpg',
-                'tamar_gold2__2026-04-11T165221.000Z_3.jpg'
-            ]
-        },
-        {
-            name: 'Lemon Tree',
-            folder: 'Lemon Tree',
-            images: [
-                'tamar_gold2__2026-04-26T170713.000Z.jpg',
-                'tamar_gold2__2026-04-26T170713.000Z_1.jpg'
-            ]
-        },
-        {
-            name: 'Yotam',
-            folder: 'Yotam',
-            images: [
-                'tamar_gold2__2026-03-29T170920.000Z.jpg',
-                'tamar_gold2__2026-03-29T170920.000Z_2.jpg',
-                'tamar_gold2__2026-03-29T170920.000Z_3.jpg',
-                'tamar_gold2__2026-03-29T170920.000Z_4.jpg',
-                'tamar_gold2__2026-03-29T170920.000Z_5.jpg'
-            ]
-        },
-        {
-            name: 'Hagar',
-            folder: 'Hagar',
-            images: [
-                'tamar_gold2__2026-04-18T180857.000Z.jpg',
-                'tamar_gold2__2026-04-18T180857.000Z_1.jpg',
-                'tamar_gold2__2026-04-18T180857.000Z_2.jpg',
-                'tamar_gold2__2026-04-18T180857.000Z_3.jpg',
-                'tamar_gold2__2026-04-18T180857.000Z_4.jpg',
-                'tamar_gold2__2026-04-18T180857.000Z_5.jpg'
-            ]
-        },
-        {
-            name: 'Yael',
-            folder: 'Yael',
-            images: [
-                'tamar_gold2__2026-04-02T165445.000Z.jpg',
-                'tamar_gold2__2026-04-02T165445.000Z_1.jpg',
-                'tamar_gold2__2026-04-02T165445.000Z_2.jpg',
-                'tamar_gold2__2026-04-02T165445.000Z_3.jpg'
-            ]
-        }
-    ];
+    // Use galleryData from gallery-data.js (global)
+    const projects = typeof galleryData !== 'undefined' ? galleryData : [];
 
     const loadGallery = () => {
-        projects.forEach(project => {
-            project.images.forEach((imgName, index) => {
-                const item = document.createElement('div');
-                item.className = 'gallery-item stippled-border';
-                item.setAttribute('role', 'button');
-                item.setAttribute('aria-label', `View detail for ${project.name} ${index + 1}`);
-                item.setAttribute('tabindex', '0');
-                item.innerHTML = `
-                    <img src="Assets/${project.folder}/${imgName}" alt="Stippled botanical illustration - ${project.name}" loading="lazy">
-                    <div class="gallery-overlay">
-                        <span class="project-tag">${project.name}</span>
-                        <span class="view-btn" data-en="View Detail" data-he="פרטי היצירה">View Detail</span>
-                    </div>
-                `;
-                
-                const triggerOpen = () => openLightbox(`Assets/${project.folder}/${imgName}`);
-                item.addEventListener('click', triggerOpen);
-                item.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        triggerOpen();
-                    }
-                });
-                galleryGrid.appendChild(item);
+        if (!galleryGrid) return;
+        galleryGrid.innerHTML = ''; // Clear existing
+        
+        projects.forEach((project, pIndex) => {
+            // Only show the first image as a cover for the project
+            if (project.images.length === 0) return;
+            
+            const imgName = project.images[0];
+            const item = document.createElement('div');
+            item.className = 'gallery-item stippled-border';
+            item.setAttribute('role', 'button');
+            item.setAttribute('aria-label', `View project: ${project.name}`);
+            item.setAttribute('tabindex', '0');
+            item.innerHTML = `
+                <img src="Assets/${project.folder}/${imgName}" alt="Project cover - ${project.name}" loading="lazy">
+                <div class="gallery-overlay">
+                    <span class="project-tag">${project.name}</span>
+                    <span class="view-btn" data-en="View Project" data-he="צפו בפרויקט">View Project</span>
+                </div>
+            `;
+            
+            const triggerOpen = () => openLightbox(pIndex, 0);
+            item.addEventListener('click', triggerOpen);
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    triggerOpen();
+                }
             });
+            galleryGrid.appendChild(item);
         });
     };
 
@@ -135,16 +82,59 @@ document.addEventListener('DOMContentLoaded', () => {
     lightbox.setAttribute('role', 'dialog');
     lightbox.innerHTML = `
         <span class="lightbox-close" role="button" aria-label="Close lightbox">&times;</span>
+        <div class="lightbox-nav">
+            <button class="nav-prev" id="lightbox-prev" aria-label="Previous image">&lsaquo;</button>
+            <button class="nav-next" id="lightbox-next" aria-label="Next image">&rsaquo;</button>
+        </div>
+        <div class="lightbox-info">
+            <span id="lightbox-project-name"></span>
+            <span id="lightbox-index"></span>
+        </div>
         <img class="lightbox-content" id="lightbox-img" alt="Enlarged botanical illustration">
     `;
     document.body.appendChild(lightbox);
 
-    const openLightbox = (src) => {
+    const updateLightboxImage = () => {
+        const project = projects[currentProjectIndex];
+        const imgName = project.images[currentImageIndex];
         const lightboxImg = document.getElementById('lightbox-img');
-        lightboxImg.src = src;
+        const projectNameEl = document.getElementById('lightbox-project-name');
+        const indexEl = document.getElementById('lightbox-index');
+
+        lightboxImg.src = `Assets/${project.folder}/${imgName}`;
+        projectNameEl.textContent = project.name;
+        indexEl.textContent = `${currentImageIndex + 1} / ${project.images.length}`;
+    };
+
+    const openLightbox = (pIndex, iIndex) => {
+        currentProjectIndex = pIndex;
+        currentImageIndex = iIndex;
+        updateLightboxImage();
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent scroll
     };
+
+    const nextImage = () => {
+        const project = projects[currentProjectIndex];
+        currentImageIndex = (currentImageIndex + 1) % project.images.length;
+        updateLightboxImage();
+    };
+
+    const prevImage = () => {
+        const project = projects[currentProjectIndex];
+        currentImageIndex = (currentImageIndex - 1 + project.images.length) % project.images.length;
+        updateLightboxImage();
+    };
+
+    document.getElementById('lightbox-next').addEventListener('click', (e) => {
+        e.stopPropagation();
+        nextImage();
+    });
+
+    document.getElementById('lightbox-prev').addEventListener('click', (e) => {
+        e.stopPropagation();
+        prevImage();
+    });
 
     const closeLightbox = () => {
         lightbox.classList.remove('active');
@@ -158,9 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-            closeLightbox();
-        }
+        if (!lightbox.classList.contains('active')) return;
+        
+        if (e.key === 'Escape') closeLightbox();
+        if (e.key === 'ArrowRight') nextImage();
+        if (e.key === 'ArrowLeft') prevImage();
     });
 
     // --- Intersection Observer for Reveal ---
