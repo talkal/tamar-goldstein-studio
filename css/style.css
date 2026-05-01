@@ -700,24 +700,23 @@ body.is-rtl .step-number {
     align-items: center;
 }
 
-/* New Contact & Footer Styles */
-.contact-details {
-    margin: var(--spacing-sm) 0 var(--spacing-md);
-}
-
-.contact-link {
-    font-family: var(--font-sans);
-    font-size: 1.1rem;
+.btn-whatsapp {
+    background: transparent;
+    border: 1px solid var(--primary);
     color: var(--primary);
-    text-decoration: none;
-    border-bottom: 1px solid rgba(26, 26, 26, 0.2);
-    transition: var(--transition-smooth);
-    padding-bottom: 2px;
+    padding: 12px 30px;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-weight: 500;
 }
 
-.contact-link:hover {
-    border-bottom-color: var(--primary);
-    opacity: 0.8;
+.btn-whatsapp:hover {
+    background-color: var(--primary);
+    color: var(--background);
 }
 
 .footer-tel {
@@ -725,4 +724,12 @@ body.is-rtl .step-number {
     opacity: 0.6;
     margin-top: 8px;
     letter-spacing: 0.05em;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: var(--transition-smooth);
+}
+
+.footer-tel:hover {
+    opacity: 1;
 }

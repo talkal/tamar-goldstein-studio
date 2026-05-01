@@ -31,6 +31,13 @@ const galleryData = [
         ]
     },
     {
+        "name": "My own",
+        "folder": "My own",
+        "images": [
+            "tamar_gold2__2026-01-30T130005.000Z.jpg"
+        ]
+    },
+    {
         "name": "Sketches",
         "folder": "Sketches",
         "images": [

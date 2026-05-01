@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show only the first 2-3 sketches in the showcase
         sketchesProject.images.slice(0, 3).forEach((imgName, iIndex) => {
             const item = document.createElement('div');
-            item.className = 'showcase-item stippled-border reveal';
+            item.className = 'showcase-item stippled-border';
             item.innerHTML = `
                 <img src="Assets/${sketchesProject.folder}/${imgName}" alt="Initial Sketch - ${iIndex + 1}" loading="lazy">
                 <div class="gallery-overlay">
