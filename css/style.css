@@ -10,8 +10,8 @@
     --text-inverse: #F9F7F2;
 
     /* Typography */
-    --font-serif: 'Cormorant Garamond', serif;
-    --font-sans: 'Inter', sans-serif;
+    --font-serif: 'Cormorant Garamond', 'Frank Ruhl Libre', serif;
+    --font-sans: 'Inter', 'Assistant', sans-serif;
 
     /* Spacing (8px baseline) */
     --spacing-xxs: 4px;
