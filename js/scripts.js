@@ -137,6 +137,12 @@ document.addEventListener('DOMContentLoaded', () => {
         updateLightboxImage();
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden'; // Prevent scroll
+        
+        // Trap focus to close button
+        setTimeout(() => {
+            const closeBtn = lightbox.querySelector('.lightbox-close');
+            if (closeBtn) closeBtn.focus();
+        }, 100);
     };
 
     const nextImage = () => {
@@ -178,6 +184,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.key === 'Escape') closeLightbox();
         if (e.key === 'ArrowRight') nextImage();
         if (e.key === 'ArrowLeft') prevImage();
+        
+        // Tab trapping logic
+        if (e.key === 'Tab') {
+            const focusableElements = lightbox.querySelectorAll('button, [role="button"]');
+            if (focusableElements.length > 0) {
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+
+                if (e.shiftKey) { // Shift + Tab
+                    if (document.activeElement === firstElement) {
+                        lastElement.focus();
+                        e.preventDefault();
+                    }
+                } else { // Tab
+                    if (document.activeElement === lastElement) {
+                        firstElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            }
+        }
     });
 
     // --- Intersection Observer for Reveal ---
