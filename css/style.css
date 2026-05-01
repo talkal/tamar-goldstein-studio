@@ -25,6 +25,29 @@
     --transition-smooth: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    opacity: 0;
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Patterns */
+.bg-stipple {
+    background-image: radial-gradient(var(--primary) 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
+    background-color: var(--background);
+}
+
 /* Reset & Base Styles */
 * {
     margin: 0;
@@ -201,12 +224,28 @@ p {
     margin-top: var(--spacing-md);
 }
 
-/* About Section */
-.about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--spacing-lg);
-    align-items: center;
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .header-right .nav-links {
+        display: none; /* Simple mobile nav for now, or could implement a burger */
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    .about-grid, .process-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .section-padding {
+        padding: var(--spacing-lg) 0;
+    }
+
+    .container {
+        padding: 0 var(--spacing-md);
+    }
 }
 
 .about-text h2 {
@@ -224,12 +263,136 @@ p {
     display: block;
 }
 
+/* Process Section */
+.process-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-lg);
+}
+
+.process-step {
+    position: relative;
+    padding: var(--spacing-md);
+    background-color: var(--surface);
+    border: 1px solid rgba(26, 26, 26, 0.05);
+    transition: var(--transition-smooth);
+}
+
+.process-step:hover {
+    border-color: var(--primary);
+}
+
+.step-number {
+    display: block;
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    color: rgba(26, 26, 26, 0.05);
+    line-height: 1;
+    margin-bottom: var(--spacing-sm);
+}
+
+.process-step h3 {
+    margin-bottom: var(--spacing-xs);
+    font-size: 1.25rem;
+}
+
+.process-step p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
 /* Gallery Section */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--spacing-md);
     margin-top: var(--spacing-lg);
+}
+
+.gallery-item {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-color: var(--surface);
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.05);
+}
+
+.view-btn {
+    color: var(--text-inverse);
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-bottom: 1px solid var(--text-inverse);
+    padding-bottom: 4px;
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(26, 26, 26, 0.95);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.lightbox.active {
+    display: flex;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    border: 1px solid rgba(249, 247, 242, 0.1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: var(--text-inverse);
+    font-size: 40px;
+    cursor: pointer;
+    line-height: 1;
 }
 
 /* Footer */
@@ -278,7 +441,40 @@ footer {
     color: var(--text-secondary);
 }
 
-/* Utility Classes */
+/* RTL Adjustments */
+body.is-rtl {
+    font-family: 'Rubik', 'Inter', sans-serif; /* Adding Rubik for better Hebrew display */
+    text-align: right;
+}
+
+body.is-rtl .nav-links {
+    flex-direction: row-reverse;
+}
+
+body.is-rtl .header-right {
+    flex-direction: row-reverse;
+}
+
+body.is-rtl .hero-content {
+    text-align: right;
+}
+
+body.is-rtl .hero-actions {
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+}
+
+body.is-rtl .about-grid {
+    direction: rtl;
+}
+
+body.is-rtl .process-grid {
+    direction: rtl;
+}
+
+body.is-rtl .step-number {
+    text-align: right;
+}
 .container {
     max-width: 1200px;
     margin: 0 auto;

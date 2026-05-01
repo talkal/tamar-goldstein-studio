@@ -6,7 +6,142 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('Tamar Goldstein Website Initialized');
     
-    // Smooth scrolling for navigation links
+    // --- Language Toggle Logic ---
+    const langToggle = document.getElementById('lang-toggle');
+    let currentLang = 'en';
+
+    const updateLanguage = (lang) => {
+        const translatableElements = document.querySelectorAll('[data-en]');
+        translatableElements.forEach(el => {
+            el.textContent = el.getAttribute(`data-${lang}`);
+        });
+
+        // Update document direction
+        document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+        document.documentElement.lang = lang;
+        
+        // Update toggle button text
+        langToggle.textContent = lang === 'en' ? 'HE' : 'EN';
+        
+        // Update body class for styling adjustments
+        document.body.classList.toggle('is-rtl', lang === 'he');
+    };
+
+    langToggle.addEventListener('click', () => {
+        currentLang = currentLang === 'en' ? 'he' : 'en';
+        updateLanguage(currentLang);
+    });
+
+    // --- Gallery Loading Logic ---
+    const galleryGrid = document.getElementById('gallery-grid');
+    const images = [
+        'tamar_gold2__2026-04-26T170713.000Z.jpg',
+        'tamar_gold2__2026-04-26T170713.000Z_1.jpg',
+        'tamar_gold2__2026-04-26T170713.000Z_2.jpg',
+        'tamar_gold2__2026-04-26T170713.000Z_3.jpg',
+        'tamar_gold2__2026-04-18T180857.000Z.jpg',
+        'tamar_gold2__2026-04-18T180857.000Z_5.jpg',
+        'tamar_gold2__2026-04-11T165221.000Z.jpg',
+        'tamar_gold2__2026-04-11T165221.000Z_4.jpg',
+        'tamar_gold2__2026-04-04T182350.000Z.jpg',
+        'tamar_gold2__2026-04-02T165445.000Z.jpg',
+        'tamar_gold2__2026-04-02T165445.000Z_1.jpg',
+        'tamar_gold2__2026-03-29T170920.000Z.jpg',
+        'tamar_gold2__2026-03-29T170920.000Z_4.jpg',
+        'tamar_gold2__2026-03-21T182634.000Z.jpg',
+        'tamar_gold2__2026-03-21T182634.000Z_5.jpg',
+        'tamar_gold2__2026-02-25T174635.000Z.jpg',
+        'tamar_gold2__2026-02-25T174635.000Z_1.jpg',
+        'tamar_gold2__2026-02-08T181232.000Z.jpg',
+        'tamar_gold2__2026-01-30T130005.000Z.jpg',
+        'tamar_gold2__2026-01-14T155322.000Z.jpg',
+        'tamar_gold2__2025-12-31T160059.000Z.jpg',
+        'tamar_gold2__2025-12-31T160059.000Z_1.jpg'
+    ];
+
+    const loadGallery = () => {
+        images.forEach((imgName, index) => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item stippled-border';
+            item.setAttribute('role', 'button');
+            item.setAttribute('aria-label', `View detail for botanical illustration ${index + 1}`);
+            item.setAttribute('tabindex', '0');
+            item.innerHTML = `
+                <img src="Assets/${imgName}" alt="Stippled botanical illustration by Tamar Goldstein" loading="lazy">
+                <div class="gallery-overlay">
+                    <span class="view-btn" data-en="View Detail" data-he="צפו בפרטים">View Detail</span>
+                </div>
+            `;
+            
+            const triggerOpen = () => openLightbox(`Assets/${imgName}`);
+            item.addEventListener('click', triggerOpen);
+            item.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    triggerOpen();
+                }
+            });
+            galleryGrid.appendChild(item);
+        });
+    };
+
+    // --- Lightbox Logic ---
+    const lightbox = document.createElement('div');
+    lightbox.id = 'lightbox';
+    lightbox.className = 'lightbox';
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.innerHTML = `
+        <span class="lightbox-close" role="button" aria-label="Close lightbox">&times;</span>
+        <img class="lightbox-content" id="lightbox-img" alt="Enlarged botanical illustration">
+    `;
+    document.body.appendChild(lightbox);
+
+    const openLightbox = (src) => {
+        const lightboxImg = document.getElementById('lightbox-img');
+        lightboxImg.src = src;
+        lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scroll
+    };
+
+    const closeLightbox = () => {
+        lightbox.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scroll
+    };
+
+    lightbox.addEventListener('click', (e) => {
+        if (e.target.id === 'lightbox' || e.target.className === 'lightbox-close') {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
+    // --- Intersection Observer for Reveal ---
+    const revealCallback = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const revealObserver = new IntersectionObserver(revealCallback, {
+        threshold: 0.1
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => {
+        revealObserver.observe(el);
+    });
+
+    loadGallery();
+
+    // --- Smooth Scrolling ---
     const navLinks = document.querySelectorAll('.nav-links a');
     
     navLinks.forEach(link => {

@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamar Goldstein | Traditional Hand Poke Tattoo & Illustration</title>
+    <title>Tamar Goldstein | Traditional Hand Poke Tattoo & Botanical Illustration</title>
     
     <!-- Meta Tags -->
-    <meta name="description" content="Tamar Goldstein - Hand Poke Tattoo Artist and Illustrator. Traditional craftsmanship meeting precise botanical illustration. The Gentle Mark.">
-    <meta name="keywords" content="hand poke tattoo, traditional tattoo, botanical illustration, Tamar Goldstein, tattooing, organic precision">
+    <meta name="description" content="Tamar Goldstein - Hand Poke Tattoo Artist and Illustrator in Israel. Specializing in soulful, botanical illustrations created with traditional, gentle stippling methods.">
+    <meta name="keywords" content="hand poke tattoo, traditional tattoo israel, botanical illustration, Tamar Goldstein, stippled tattoo, gentle mark, tattoo ritual">
+    
+    <!-- Open Graph / Social -->
+    <meta property="og:title" content="Tamar Goldstein | Traditional Hand Poke Tattoo">
+    <meta property="og:description" content="Soulful botanical illustrations created with the gentle ritual of hand poking.">
+    <meta property="og:image" content="Assets/tamar_gold2__2026-04-26T170713.000Z.jpg">
+    <meta property="og:type" content="website">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
     
     <!-- Stylesheets -->
     <link rel="stylesheet" href="css/style.css">
@@ -23,10 +29,10 @@
             <div class="logo">TAMAR GOLDSTEIN</div>
             <div class="header-right">
                 <ul class="nav-links">
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#gallery">Gallery</a></li>
-                    <li><a href="#process">Process</a></li>
-                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#about" data-en="About" data-he="אודות">About</a></li>
+                    <li><a href="#gallery" data-en="Gallery" data-he="גלריה">Gallery</a></li>
+                    <li><a href="#process" data-en="Process" data-he="תהליך">Process</a></li>
+                    <li><a href="#contact" data-en="Contact" data-he="צרו קשר">Contact</a></li>
                 </ul>
                 <button id="lang-toggle" class="btn-lang" aria-label="Toggle Language">HE</button>
             </div>
@@ -37,38 +43,68 @@
         <section id="hero">
             <div class="container">
                 <div class="hero-content">
-                    <p class="subtitle">Traditional. Gentle. From the Heart.</p>
-                    <h1 id="hero-title">The Gentle Mark</h1>
+                    <p class="subtitle" data-en="Traditional. Gentle. From the Heart." data-he="מסורתי. עדין. מהלב.">Traditional. Gentle. From the Heart.</p>
+                    <h1 id="hero-title" data-en="The Gentle Mark" data-he="הסימן העדין">The Gentle Mark</h1>
                     <div class="hero-actions">
-                        <a href="#contact" class="btn btn-primary">Begin a conversation</a>
-                        <a href="#gallery" class="btn btn-secondary">Explore the work</a>
+                        <a href="#contact" class="btn btn-primary" data-en="Begin a conversation" data-he="התחילו שיחה">Begin a conversation</a>
+                        <a href="#gallery" class="btn btn-secondary" data-en="Explore the work" data-he="גלו את העבודות">Explore the work</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="section-padding container">
+        <section id="about" class="section-padding container reveal">
             <div class="about-grid">
                 <div class="about-text">
-                    <p class="subtitle">Our Philosophy</p>
-                    <h2>Organic Precision</h2>
-                    <p>Tamar Goldstein is a Hand Poke Tattoo Artist and Illustrator. She serves individuals seeking a soulful, permanent connection to nature and art through a traditional, gentle, and precise tattooing method.</p>
-                    <p>The core essence of the brand is <strong>Organic Precision</strong> — where the raw beauty of nature meets the intentionality of the human heart.</p>
+                    <p class="subtitle" data-en="Our Philosophy" data-he="הפילוסופיה שלנו">Our Philosophy</p>
+                    <h2 data-en="Organic Precision" data-he="דיוק אורגני">Organic Precision</h2>
+                    <p data-en="I believe that every mark on the skin should be an intentional ritual. My work as a Hand Poke artist is a bridge between the raw, ancient beauty of nature and the precise intentionality of the human heart." data-he="אני מאמינה שכל סימן על העור צריך להיות ריטואל מכוון. העבודה שלי כאמנית Hand Poke היא גשר בין היופי הגולמי והעתיק של הטבע לבין הכוונה המדויקת של הלב האנושי.">I believe that every mark on the skin should be an intentional ritual. My work as a Hand Poke artist is a bridge between the raw, ancient beauty of nature and the precise intentionality of the human heart.</p>
+                    <p data-en="Using traditional methods, I create botanical illustrations that grow with you—dot by dot, stipple by stipple." data-he="בעזרת שיטות מסורתיות, אני יוצרת איורים בוטניים שצומחים איתך — נקודה אחר נקודה, קו אחר קו.">Using traditional methods, I create botanical illustrations that grow with you—dot by dot, stipple by stipple.</p>
                 </div>
                 <div class="about-image stippled-border">
-                    <!-- Featured stippled illustration -->
                     <img src="Assets/tamar_gold2__2026-04-26T170713.000Z.jpg" alt="Botanical Hand Poke Illustration" loading="lazy">
                 </div>
             </div>
         </section>
 
-        <section id="gallery" class="section-padding">
+        <section id="process" class="section-padding reveal">
             <div class="container">
-                <p class="subtitle text-center">Portfolio</p>
-                <h2 class="text-center">The Stippled Gallery</h2>
-                <div id="gallery-grid" class="gallery-grid">
-                    <!-- Gallery items will be dynamically loaded -->
+                <p class="subtitle text-center" data-en="The Method" data-he="השיטה">The Method</p>
+                <h2 class="text-center" data-en="The Ritual" data-he="הריטואל">The Ritual</h2>
+                <div class="process-grid">
+                    <div class="process-step">
+                        <span class="step-number">01</span>
+                        <h3 data-en="The Consultation" data-he="ההתייעצות">The Consultation</h3>
+                        <p data-en="Every tattoo begins with a story. We listen to the rhythm of your intent, ensuring the design resonates with your personal narrative." data-he="כל קעקוע מתחיל בסיפור. אנחנו מקשיבים לקצב הכוונה שלך, ומבטיחים שהעיצוב יהדהד עם הנרטיב האישי שלך.">Every tattoo begins with a story. We listen to the rhythm of your intent, ensuring the design resonates with your personal narrative.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-number">02</span>
+                        <h3 data-en="The Drawing" data-he="הציור">The Drawing</h3>
+                        <p data-en="Botanical lines drawn with precision and grace, honoring the unique flow and anatomy of your body." data-he="קווים בוטניים מצוירים בדיוק ובחן, מכבדים את הזרימה והאנטומיה הייחודית של הגוף שלך.">Botanical lines drawn with precision and grace, honoring the unique flow and anatomy of your body.</p>
+                    </div>
+                    <div class="process-step">
+                        <span class="step-number">03</span>
+                        <h3 data-en="The Stipple" data-he="הקיעקוע">The Stipple</h3>
+                        <p data-en="The ritual of the dot. A slow, meditative process where art becomes permanent through a gentle, manual technique." data-he="ריטואל הנקודה. תהליך איטי ומדיטטיבי שבו האמנות הופכת לקבועה באמצעות טכניקה ידנית ועדינה.">The ritual of the dot. A slow, meditative process where art becomes permanent through a gentle, manual technique.</p>
+                    </div>
                 </div>
+            </div>
+        </section>
+
+        <section id="gallery" class="section-padding container reveal">
+            <p class="subtitle text-center" data-en="Portfolio" data-he="תיק עבודות">Portfolio</p>
+            <h2 class="text-center" data-en="The Stippled Gallery" data-he="גלריית הנקודות">The Stippled Gallery</h2>
+            <div id="gallery-grid" class="gallery-grid">
+                <!-- Gallery items will be dynamically loaded -->
+            </div>
+        </section>
+
+        <section id="contact" class="section-padding reveal">
+            <div class="container text-center">
+                <p class="subtitle" data-en="Connect" data-he="חיבור">Connect</p>
+                <h2 data-en="Begin a conversation" data-he="התחילו שיחה">Begin a conversation</h2>
+                <p data-en="Share your story and let's create something permanent." data-he="שתפו את הסיפור שלכם ובואו ניצור משהו קבוע.">Share your story and let's create something permanent.</p>
+                <a href="mailto:hello@tamargoldstein.com" class="btn btn-primary" data-en="Send an Inquiry" data-he="שלחו פנייה">Send an Inquiry</a>
             </div>
         </section>
     </main>
