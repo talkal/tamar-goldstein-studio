@@ -311,12 +311,16 @@ p {
     color: var(--text-secondary);
 }
 
+.about-image {
+    width: fit-content;
+    margin: var(--spacing-lg) auto 0;
+}
+
 .about-image img {
-    width: 70%;
-    max-width: 450px;
+    width: 350px; /* Specific minimal size */
+    max-width: 100%;
     height: auto;
     display: block;
-    margin: var(--spacing-md) auto 0;
     opacity: 0.85;
     mix-blend-mode: multiply;
     filter: grayscale(0.1) contrast(0.9);
