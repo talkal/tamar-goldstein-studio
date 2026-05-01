@@ -165,10 +165,6 @@ p {
     gap: var(--spacing-lg);
 }
 
-.is-rtl .header-right {
-    flex-direction: row-reverse;
-}
-
 .logo {
     font-family: var(--font-serif);
     font-weight: 700;
