@@ -45,8 +45,8 @@ document.addEventListener('DOMContentLoaded', () => {
         galleryGrid.innerHTML = ''; // Clear existing
         
         projects.forEach((project, pIndex) => {
-            // Only show the first image as a cover for the project
-            if (project.images.length === 0) return;
+            // Filter out 'Sketches' from the main gallery grid
+            if (project.name === 'Sketches' || project.images.length === 0) return;
             
             const imgName = project.images[0];
             const item = document.createElement('div');
@@ -71,6 +71,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
             galleryGrid.appendChild(item);
+        });
+    };
+
+    // --- Showcase Loading Logic ---
+    const showcaseGrid = document.querySelector('.showcase-grid');
+    const loadShowcase = () => {
+        if (!showcaseGrid) return;
+        showcaseGrid.innerHTML = ''; // Clear existing hardcoded images
+        
+        const sketchesProjectIndex = projects.findIndex(p => p.name === 'Sketches');
+        if (sketchesProjectIndex === -1) return;
+        
+        const sketchesProject = projects[sketchesProjectIndex];
+        // Show only the first 2-3 sketches in the showcase
+        sketchesProject.images.slice(0, 3).forEach((imgName, iIndex) => {
+            const item = document.createElement('div');
+            item.className = 'showcase-item stippled-border reveal';
+            item.innerHTML = `
+                <img src="Assets/${sketchesProject.folder}/${imgName}" alt="Initial Sketch - ${iIndex + 1}" loading="lazy">
+                <div class="gallery-overlay">
+                    <span class="view-btn" data-en="View Sketch" data-he="צפו בסקיצה">View Sketch</span>
+                </div>
+            `;
+            item.addEventListener('click', () => openLightbox(sketchesProjectIndex, iIndex));
+            showcaseGrid.appendChild(item);
         });
     };
 
@@ -227,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    loadShowcase();
     loadGallery();
 
     // --- Smooth Scrolling ---
