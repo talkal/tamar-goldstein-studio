@@ -34,54 +34,78 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Gallery Loading Logic ---
     const galleryGrid = document.getElementById('gallery-grid');
-    const images = [
-        'tamar_gold2__2026-04-26T170713.000Z.jpg',
-        'tamar_gold2__2026-04-26T170713.000Z_1.jpg',
-        'tamar_gold2__2026-04-26T170713.000Z_2.jpg',
-        'tamar_gold2__2026-04-26T170713.000Z_3.jpg',
-        'tamar_gold2__2026-04-18T180857.000Z.jpg',
-        'tamar_gold2__2026-04-18T180857.000Z_5.jpg',
-        'tamar_gold2__2026-04-11T165221.000Z.jpg',
-        'tamar_gold2__2026-04-11T165221.000Z_4.jpg',
-        'tamar_gold2__2026-04-04T182350.000Z.jpg',
-        'tamar_gold2__2026-04-02T165445.000Z.jpg',
-        'tamar_gold2__2026-04-02T165445.000Z_1.jpg',
-        'tamar_gold2__2026-03-29T170920.000Z.jpg',
-        'tamar_gold2__2026-03-29T170920.000Z_4.jpg',
-        'tamar_gold2__2026-03-21T182634.000Z.jpg',
-        'tamar_gold2__2026-03-21T182634.000Z_5.jpg',
-        'tamar_gold2__2026-02-25T174635.000Z.jpg',
-        'tamar_gold2__2026-02-25T174635.000Z_1.jpg',
-        'tamar_gold2__2026-02-08T181232.000Z.jpg',
-        'tamar_gold2__2026-01-30T130005.000Z.jpg',
-        'tamar_gold2__2026-01-14T155322.000Z.jpg',
-        'tamar_gold2__2025-12-31T160059.000Z.jpg',
-        'tamar_gold2__2025-12-31T160059.000Z_1.jpg'
+    
+    const projects = [
+        {
+            name: 'Sketches',
+            folder: 'Sketches',
+            images: [
+                'tamar_gold2__2025-12-31T160059.000Z.jpg',
+                'tamar_gold2__2026-04-11T165221.000Z_4.jpg',
+                'tamar_gold2__2026-04-26T170713.000Z_2.jpg',
+                'tamar_gold2__2026-04-26T170713.000Z_3.jpg'
+            ]
+        },
+        {
+            name: 'Big Fish Energy',
+            folder: 'Big Fish Energy',
+            images: [
+                'tamar_gold2__2026-02-25T174635.000Z.jpg',
+                'tamar_gold2__2026-02-25T174635.000Z_1.jpg'
+            ]
+        },
+        {
+            name: 'Lemon Tree',
+            folder: 'Lemon Tree',
+            images: [
+                'tamar_gold2__2026-02-08T181232.000Z.jpg',
+                'tamar_gold2__2026-02-08T181232.000Z_1.jpg'
+            ]
+        },
+        {
+            name: 'Yotam',
+            folder: 'Yotam',
+            images: [
+                'tamar_gold2__2026-03-29T170920.000Z.jpg',
+                'tamar_gold2__2026-03-29T170920.000Z_5.jpg'
+            ]
+        },
+        {
+            name: 'Hagar',
+            folder: 'Hagar',
+            images: [
+                'tamar_gold2__2026-01-14T155322.000Z.jpg',
+                'tamar_gold2__2026-03-29T170920.000Z_4.jpg'
+            ]
+        }
     ];
 
     const loadGallery = () => {
-        images.forEach((imgName, index) => {
-            const item = document.createElement('div');
-            item.className = 'gallery-item stippled-border';
-            item.setAttribute('role', 'button');
-            item.setAttribute('aria-label', `View detail for botanical illustration ${index + 1}`);
-            item.setAttribute('tabindex', '0');
-            item.innerHTML = `
-                <img src="Assets/${imgName}" alt="Stippled botanical illustration by Tamar Goldstein" loading="lazy">
-                <div class="gallery-overlay">
-                    <span class="view-btn" data-en="View Detail" data-he="צפו בפרטים">View Detail</span>
-                </div>
-            `;
-            
-            const triggerOpen = () => openLightbox(`Assets/${imgName}`);
-            item.addEventListener('click', triggerOpen);
-            item.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    triggerOpen();
-                }
+        projects.forEach(project => {
+            project.images.forEach((imgName, index) => {
+                const item = document.createElement('div');
+                item.className = 'gallery-item stippled-border';
+                item.setAttribute('role', 'button');
+                item.setAttribute('aria-label', `View detail for ${project.name} ${index + 1}`);
+                item.setAttribute('tabindex', '0');
+                item.innerHTML = `
+                    <img src="Assets/${project.folder}/${imgName}" alt="Stippled botanical illustration - ${project.name}" loading="lazy">
+                    <div class="gallery-overlay">
+                        <span class="project-tag">${project.name}</span>
+                        <span class="view-btn" data-en="View Detail" data-he="צפו בפרטים">View Detail</span>
+                    </div>
+                `;
+                
+                const triggerOpen = () => openLightbox(`Assets/${project.folder}/${imgName}`);
+                item.addEventListener('click', triggerOpen);
+                item.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        triggerOpen();
+                    }
+                });
+                galleryGrid.appendChild(item);
             });
-            galleryGrid.appendChild(item);
         });
     };
 
