@@ -163,6 +163,60 @@ document.addEventListener('DOMContentLoaded', () => {
         revealObserver.observe(el);
     });
 
+    // --- Header Scroll Effect ---
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    });
+
+    // --- Logo Dot Animation ---
+    const logoDots = document.getElementById('logo-dots');
+    const logo = document.getElementById('main-logo');
+    
+    const createDots = () => {
+        const rect = logo.getBoundingClientRect();
+        for (let i = 0; i < 30; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            const x = Math.random() * rect.width;
+            const y = Math.random() * rect.height;
+            dot.style.left = `${x}px`;
+            dot.style.top = `${y}px`;
+            dot.style.animation = `dotDraw ${1 + Math.random() * 2}s ease-in-out forwards`;
+            dot.style.animationDelay = `${Math.random() * 2}s`;
+            logoDots.appendChild(dot);
+        }
+    };
+
+    createDots();
+
+    // --- Form Handling ---
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const submitBtn = contactForm.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerText;
+            
+            submitBtn.innerText = document.documentElement.lang === 'he' ? 'שולח...' : 'Sending...';
+            submitBtn.disabled = true;
+
+            // Simulate send
+            setTimeout(() => {
+                submitBtn.innerText = document.documentElement.lang === 'he' ? 'נשלח בהצלחה' : 'Message Sent';
+                contactForm.reset();
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                }, 3000);
+            }, 1500);
+        });
+    }
+
     loadGallery();
 
     // --- Smooth Scrolling ---
