@@ -198,9 +198,10 @@ p {
     transition: var(--transition-smooth);
 }
 
-.btn-lang:hover {
-    background-color: var(--primary);
-    color: var(--text-inverse);
+.btn-la.btn:hover {
+    background: var(--primary);
+    color: var(--background);
+    transform: translateY(-2px);
 }
 
 /* Hero Section */
@@ -256,7 +257,7 @@ p {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-lg);
-    margin-top: var(--spacing-lg);
+    margin: var(--spacing-lg) 0 var(--spacing-xl); /* Increased bottom margin */
 }
 
 .showcase-item img {
@@ -451,7 +452,7 @@ p {
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-bottom-color: var(--primary);
+    border-bottom: 2px solid var(--primary); /* Thicker border on focus */
 }
 
 /* Logo Animation */

@@ -186,8 +186,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const y = Math.random() * rect.height;
             dot.style.left = `${x}px`;
             dot.style.top = `${y}px`;
-            dot.style.animation = `dotDraw ${1 + Math.random() * 2}s ease-in-out forwards`;
-            dot.style.animationDelay = `${Math.random() * 2}s`;
+            dot.style.animation = `dotDraw ${0.5 + Math.random() * 1}s ease-in-out forwards`;
+            dot.style.animationDelay = `${Math.random() * 1}s`;
             logoDots.appendChild(dot);
         }
     };
