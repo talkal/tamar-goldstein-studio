@@ -100,6 +100,11 @@ p {
     max-width: 65ch;
 }
 
+.text-center p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* Buttons */
 .btn {
     display: inline-block;
@@ -754,6 +759,7 @@ body.is-rtl .step-number {
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: 500;
+    margin: var(--spacing-sm) 0 var(--spacing-md);
 }
 
 .btn-whatsapp:hover {
