@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <img src="Assets/${project.folder}/${imgName}" alt="Stippled botanical illustration - ${project.name}" loading="lazy">
                     <div class="gallery-overlay">
                         <span class="project-tag">${project.name}</span>
-                        <span class="view-btn" data-en="View Detail" data-he="צפו בפרטים">View Detail</span>
+                        <span class="view-btn" data-en="View Detail" data-he="פרטי היצירה">View Detail</span>
                     </div>
                 `;
                 
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Simulate send
             setTimeout(() => {
-                submitBtn.innerText = document.documentElement.lang === 'he' ? 'נשלח בהצלחה' : 'Message Sent';
+                submitBtn.innerText = document.documentElement.lang === 'he' ? 'ההודעה נשלחה' : 'Message Sent';
                 contactForm.reset();
                 setTimeout(() => {
                     submitBtn.innerText = originalText;
