@@ -281,24 +281,64 @@ p {
 }
 @media (max-width: 768px) {
     .header-right .nav-links {
-        display: none; /* Simple mobile nav for now, or could implement a burger */
+        display: none; 
+    }
+
+    /* Mobile-specific navigation improvement */
+    .header-right::after {
+        content: attr(data-mobile-msg);
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        opacity: 0.6;
     }
 
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
+        line-height: 1.1;
     }
 
-    .hero-grid, .about-grid, .process-grid, .showcase-grid {
+    h2 {
+        font-size: 1.75rem;
+    }
+
+    .hero-grid, .about-grid, .process-grid {
         grid-template-columns: 1fr;
-        gap: var(--spacing-md);
+        gap: var(--spacing-lg);
+    }
+
+    .hero-content {
+        text-align: center;
+        padding: var(--spacing-md) 0;
+    }
+
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .hero-actions .btn {
+        width: 100%;
+        text-align: center;
     }
 
     .section-padding {
-        padding: var(--spacing-lg) 0;
+        padding: var(--spacing-xl) 0;
     }
 
     .container {
         padding: 0 var(--spacing-md);
+    }
+
+    /* Tactile mobile gallery peek */
+    .gallery-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .gallery-item {
+        margin-bottom: var(--spacing-sm);
     }
 }
 
@@ -828,5 +868,20 @@ body.is-rtl .step-number {
 @media (max-width: 768px) {
     .floating-cta {
         display: flex;
+        bottom: 25px;
+        right: 25px;
+        width: 55px;
+        height: 55px;
+        background-color: var(--primary);
+        color: var(--background);
+        border: 2px solid var(--background);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Improved touch targets for form */
+    .form-group input, 
+    .form-group textarea {
+        font-size: 16px; /* Prevents iOS auto-zoom */
+        padding: 15px;
     }
 }
